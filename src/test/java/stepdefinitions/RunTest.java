@@ -12,7 +12,7 @@ import utils.GlobalProperties;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features="src/main/java/featurefiles/web",
+        features="src/main/java/featurefiles",
         glue="stepdefinitions",
         plugin={"pretty", "json:target/cucumberreports.json"}
 )

@@ -13,12 +13,13 @@ public class PostApi {
 
 
     @When("^user send a post request at \"([^\"]*)\" with json data \"([^\"]*)\"$")
-    public void user_send_a_post_request_at_with_json_data(String url, String fileName) throws Throwable {
+    public void user_send_a_post_request_at_with_json_data(String url,String fileName) {
         postAPI.postMethod(url,fileName);
     }
 
     @Then("^response code should be \"([^\"]*)\"$")
-    public void response_code_should_be(int statusCode){
-        postAPI.verifyStatusCode(statusCode);
+    public void response_code_should_be(String statusCode){
+
+        postAPI.verifyStatusCode(Integer.parseInt(statusCode));
     }
 }
