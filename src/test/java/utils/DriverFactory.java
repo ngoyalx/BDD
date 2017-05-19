@@ -27,6 +27,11 @@ public class DriverFactory {
     private static File app;
 
 
+    /**
+     * Will return the webdriver instance based on the input browser name
+     * @param browser
+     * @return
+     */
     public static WebDriver getWebDriver(String browser){
         try {
             isRemoteExecution = GlobalProperties.getPropertyMap().get("isRemoteExecution");
@@ -53,6 +58,11 @@ public class DriverFactory {
         }
     }
 
+    /**
+     * Will return the Appiumdriver instance based on the input
+     * @param browser
+     * @return
+     */
     public static AppiumDriver<MobileElement> getMobileDriver(String browser){
         try {
             if (isRemoteExecution.equalsIgnoreCase("true")) {
@@ -84,6 +94,11 @@ public class DriverFactory {
     }
 
 
+    /**
+     * Will setup the webdriver paths based on the browser and the platform
+     * @param browser
+     * @return
+     */
     private static WebDriver configureDriver(String browser){
         try{
             String current_OS = GlobalProperties.getPropertyMap().get("os.name").toLowerCase();
@@ -136,7 +151,11 @@ public class DriverFactory {
     }
 
 
-
+    /**
+     * Will return the capabilities for Android native platform
+     * @param capabilities
+     * @return
+     */
     private static DesiredCapabilities getAndroidNativeCapabilities(DesiredCapabilities capabilities){
 
         if(isRemoteExecution.equalsIgnoreCase("true")){
@@ -152,6 +171,11 @@ public class DriverFactory {
     }
 
 
+    /**
+     * Will return the capabilities for Android web platform
+     * @param capabilities
+     * @return
+     */
     private static DesiredCapabilities getAndroidWebCapabilities(DesiredCapabilities capabilities){
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "chrome");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, GlobalProperties.getPropertyMap().get("androidPlatformVersion"));
@@ -160,6 +184,11 @@ public class DriverFactory {
         return capabilities;
     }
 
+    /**
+     * Will return the capabilities for IOS native platform
+     * @param capabilities
+     * @return
+     */
     private static DesiredCapabilities getIOSNativeCapabilities(DesiredCapabilities capabilities){
         if(isRemoteExecution.equalsIgnoreCase("true")){
                 app = new File(GlobalProperties.remoteAppDir,GlobalProperties.getPropertyMap().get("iosAppName"));
@@ -173,6 +202,13 @@ public class DriverFactory {
         return capabilities;
     }
 
+
+
+    /**
+     * Will return the capabilities for IOS web platform
+     * @param capabilities
+     * @return
+     */
     private static DesiredCapabilities getIOSWebCapabilities(DesiredCapabilities capabilities){
         capabilities.setCapability(MobileCapabilityType.BROWSER_NAME, "safari");
         capabilities.setCapability(MobileCapabilityType.PLATFORM_VERSION, GlobalProperties.getPropertyMap().get("iosPlatformVersion"));
@@ -181,11 +217,9 @@ public class DriverFactory {
         return capabilities;
     }
 
-    public static byte[] takesScreenShot(){
-        byte[] screenshot =((TakesScreenshot)driver).getScreenshotAs(OutputType.BYTES);
-        return screenshot;
-    }
-
+        /**
+     * Will kill the driver instance
+     */
     public static void tearDown(){
         if(driver!=null){
             driver.quit();

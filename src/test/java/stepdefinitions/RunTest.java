@@ -3,7 +3,6 @@ package stepdefinitions;
 import cucumber.api.CucumberOptions;
 import cucumber.api.junit.Cucumber;
 import org.junit.runner.RunWith;
-import utils.GlobalProperties;
 
 /**
  * Created by ngoyal on 5/17/2017.
@@ -12,7 +11,7 @@ import utils.GlobalProperties;
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
-        features="src/main/java/featurefiles",
+        features="src/main/java/featurefiles/api",
         glue="stepdefinitions",
         plugin={"pretty", "json:target/cucumberreports.json"}
 )

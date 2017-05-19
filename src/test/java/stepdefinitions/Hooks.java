@@ -3,7 +3,11 @@ package stepdefinitions;
 import cucumber.api.Scenario;
 import cucumber.api.java.After;
 import cucumber.api.java.Before;
+import io.appium.java_client.AppiumDriver;
+import io.appium.java_client.MobileElement;
 import org.apache.log4j.PropertyConfigurator;
+import org.openqa.selenium.WebDriver;
+import pageobjects.BaseClass;
 import utils.DriverFactory;
 import utils.GlobalProperties;
 import utils.LogUtility;
@@ -16,6 +20,11 @@ import io.restassured.specification.RequestSpecification;
  */
 public class Hooks {
 
+    public WebDriver driver = null;
+    public AppiumDriver<MobileElement> driver1 = null;
+    BaseClass baseClass = null;
+
+
 
     public GlobalProperties globalProperties = null;
     private PropertiesFileReader propertiesReader= null;
@@ -24,21 +33,38 @@ public class Hooks {
     public Hooks(){
         globalProperties = new GlobalProperties();
         setAllPropertiesInGlobalHashMap();
-        PropertyConfigurator.configure(GlobalProperties.LogFilePath);
+       // PropertyConfigurator.configure(GlobalProperties.LogFilePath);
     }
 
+
+    /**
+     * Will setup the execution environment before each scenario for web, mobile and API
+     */
     @Before
     public void setupExecutionEnvironment(){
         if(GlobalProperties.getPropertyMap().get("AUT").toLowerCase().contains("web")){
             setupWebEnvironment();
+            baseClass = new BaseClass(driver);
         }else if(GlobalProperties.getPropertyMap().get("AUT").toLowerCase().contains("mobile")){
             setupMobileEnvironment();
+            baseClass = new BaseClass(driver1);
         }else if(GlobalProperties.getPropertyMap().get("AUT").toLowerCase().contains("api")){
             setupAPIEnvironment();
+            baseClass = new BaseClass();
+        }
+    }
+
+    private void initializeBaseClass(){
+        if(driver!=null){
+
         }
     }
 
 
+    /**
+     * Will take the screenshot for failed scenario and will kill the driver instance.
+     * @param scenario
+     */
     @After
     public void tearDown(Scenario scenario){
         takeScreenShotOnFailure(scenario);
@@ -46,9 +72,9 @@ public class Hooks {
     }
 
 
-
-
-
+    /**
+     * Will load the config.properties and System properties in a global hashmap
+     */
     private void setAllPropertiesInGlobalHashMap() {
         if (propertiesReader == null) {
             propertiesReader = new PropertiesFileReader();
@@ -59,22 +85,31 @@ public class Hooks {
     }
 
 
+    /**
+     * Will setup the environment for web execution
+     */
     private void setupWebEnvironment(){
             if(GlobalProperties.getPropertyMap().get("browser").toLowerCase().contains("firefox")){
-                DriverFactory.getWebDriver(GlobalProperties.getPropertyMap().get("browser"));
+                this.driver = DriverFactory.getWebDriver(GlobalProperties.getPropertyMap().get("browser"));
             }else if(GlobalProperties.getPropertyMap().get("browser").toLowerCase().contains("chrome")){
-                DriverFactory.getWebDriver(GlobalProperties.getPropertyMap().get("browser"));
+                this.driver = DriverFactory.getWebDriver(GlobalProperties.getPropertyMap().get("browser"));
             }
     }
 
+    /**
+     * Will setup the environment for mobile execution
+     */
     private void setupMobileEnvironment(){
             if(GlobalProperties.getPropertyMap().get("browser").toLowerCase().contains("androidnative")){
-                DriverFactory.getMobileDriver(GlobalProperties.getPropertyMap().get("browser"));
+                this.driver1 = DriverFactory.getMobileDriver(GlobalProperties.getPropertyMap().get("browser"));
             }else if(GlobalProperties.getPropertyMap().get("browser").toLowerCase().contains("iosnative")){
-                DriverFactory.getMobileDriver(GlobalProperties.getPropertyMap().get("browser"));
+                this.driver1 = DriverFactory.getMobileDriver(GlobalProperties.getPropertyMap().get("browser"));
             }
     }
 
+    /**
+     * Will setup the execution environment for API
+     */
     private void setupAPIEnvironment(){
         RequestSpecBuilder builder = new RequestSpecBuilder();
         builder.addHeader("Authorization",GlobalProperties.getPropertyMap().get("Authorization"));
@@ -83,10 +118,15 @@ public class Hooks {
         requestSpec.baseUri(GlobalProperties.getPropertyMap().get("ApiEndPoint"));
     }
 
+
+    /**
+     * Will take the sceenshot for failed scenario in case of web execution
+     * @param scenario
+     */
     private void takeScreenShotOnFailure(Scenario scenario){
         if(GlobalProperties.getPropertyMap().get("AUT").equalsIgnoreCase("web")){
             if(scenario.isFailed()) {
-                byte[] screenShot = DriverFactory.takesScreenShot();
+                byte[] screenShot = BaseClass.takesScreenShot();
                 scenario.embed(screenShot,"image/png");
             }
         }

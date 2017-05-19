@@ -47,7 +47,8 @@ public class GlobalProperties {
 
         ConfigFilePath = System.getProperty("user.dir") + FileSeperator.get() + "config.properties";
 
-        LogFilePath = System.getProperty("user.dir") + FileSeperator.get() + "log4j.properties";
+        LogFilePath = System.getProperty("user.dir") + FileSeperator.get() + "src" + FileSeperator.get()
+                + "test" + FileSeperator.get() + "resources" + FileSeperator.get() + "log4j.properties";
 
         propertyMap = new HashMap<String, String>();
 
@@ -56,16 +57,12 @@ public class GlobalProperties {
         localAppDir = new File(System.getProperty("user.dir") + FileSeperator.get() + "src"
                 + FileSeperator.get() + "main" + FileSeperator.get() + "resources" + FileSeperator.get()
                 + "testApps");
-
-
     }
 
 
     public static HashMap<String,String> getPropertyMap(){
         return propertyMap;
     }
-
-
     }
 
 
