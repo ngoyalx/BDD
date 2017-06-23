@@ -35,7 +35,7 @@ public class GlobalProperties {
 
         ChromeDriverPathForMac = System.getProperty("user.dir") + FileSeperator.get() + "src" + FileSeperator.get()
                 + "main" + FileSeperator.get() + "resources" + FileSeperator.get() + "drivers" + FileSeperator.get()
-                + "chromedriver";
+                + "chromedriver_mac";
 
         FirefoxDriverPathForWindows = System.getProperty("user.dir") + FileSeperator.get() + "src" + FileSeperator.get()
                 + "main" + FileSeperator.get() + "resources" + FileSeperator.get() + "drivers" + FileSeperator.get()
@@ -43,7 +43,7 @@ public class GlobalProperties {
 
         FirefoxDriverPathForMac = System.getProperty("user.dir") + FileSeperator.get() + "src" + FileSeperator.get()
                 + "main" + FileSeperator.get() + "resources" + FileSeperator.get() + "drivers" + FileSeperator.get()
-                + "geckodriver";
+                + "geckodriver_mac";
 
         ConfigFilePath = System.getProperty("user.dir") + FileSeperator.get() + "config.properties";
 

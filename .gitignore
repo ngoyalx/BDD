@@ -1,0 +1,9 @@
+/target/
+*target/
+
+
+target/maven-status/maven-compiler-plugin/testCompile/default-testCompile/createdFiles.lst
+
+target/cucumberreports.json
+
+*.class

@@ -4,7 +4,7 @@ import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import org.json.JSONObject;
-import stepdefinitions.Hooks;
+import stepdefinitions.api.Hooks;
 import utils.GlobalProperties;
 import utils.Utility;
 

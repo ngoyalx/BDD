@@ -126,6 +126,8 @@ public class DriverFactory {
                     LogUtility.log.info("Requested browser is Firefox-----Current operating system is MAC");
                     System.setProperty("webdriver.gecko.driver", GlobalProperties.FirefoxDriverPathForMac);
                     LogUtility.log.info("Setting up firefox driver for MAC");
+                    String path = System.getProperty("user.dir");
+    				System.setProperty("webdriver.gecko.driver", path + "/src/main/resources/drivers/geckodriver_mac");
                     driver = new FirefoxDriver();
                     LogUtility.log.info("Opening up firefox browser for MAC");
                 } else if (current_OS.contains("windows")) {
